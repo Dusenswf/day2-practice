@@ -13,7 +13,24 @@ class Node {
 public class Sign {
 
     void makeSign(ArrayList<Node> signList) throws Exception {
+        //2. valid 검사
+        invalidPages(signList);
+
         //1. 서명 정렬하기
+        sortPages(signList);
+
+        //3. 서명하기
+        doSign(signList);
+    }
+
+    private void invalidPages(ArrayList<Node> signList) throws Exception {
+        for (Node tar : signList) {
+            if (tar.dateCode > 0 && tar.dateCode < 10) continue;
+            throw new Exception();
+        }
+    }
+
+    private void sortPages(ArrayList<Node> signList) {
         for (int y = 0; y < signList.size(); y++) {
             for (int x = y + 1; x < signList.size(); x++) {
                 if (signList.get(y).dateCode > signList.get(x).dateCode) {
@@ -25,23 +42,11 @@ public class Sign {
                 }
             }
         }
+    }
 
-        //2. valid 검사
-        boolean flag = false;
+    private void doSign(ArrayList<Node> signList) {
         for (Node tar : signList) {
-            if (tar.dateCode > 0 && tar.dateCode < 10) continue;
-            flag = true;
-            break;
-        }
-
-        if (flag == true) {
-            throw new Exception();
-        }
-        else {
-            //3. 서명하기
-            for (Node tar : signList) {
-                System.out.println(tar.dateCode + " : " + tar.name);
-            }
+            System.out.println(tar.dateCode + " : " + tar.name);
         }
     }
 
@@ -59,3 +64,4 @@ public class Sign {
         }
     }
 }
+
